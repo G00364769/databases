@@ -1,0 +1,8 @@
+4.3.1
+db.docs.aggregate([ { $match: {"car.engineSize": {$exists:true}}}, {$group: {_id: "car.reg", Average: {$avg:"$car.engineSize"}}} ]);
+
+4.3.2
+db.docs.aggregate([ { $bucket: { groupBy: "$pop", boundaries: [0,50000,100000,150000], default: "other", output:{"counties": {$push: "$name"}} }} ]);
+
+4.3.3
+db.docs.aggregate([ {$match: {"pop": {$exists:true}}}, {$addFields: {"pop": {$cond: { if: { $lte: [ "$pop", 100000 ] }, then: "Small County", else: "Big County" }}}} ])

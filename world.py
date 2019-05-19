@@ -1,5 +1,4 @@
 import pymysql
-
 conn=None
 
 def connect():
@@ -10,7 +9,7 @@ def connect():
 def get_city():
     if (not conn):
         print("No Connection")
-        connect();
+        #connect();
     else:
         print("Already Connected")
     query="select* FROM city LIMIT 15"
@@ -24,7 +23,7 @@ def get_city():
 def get_newcity(cityname,countrycode,District,Population):
 	if (not conn):
 			print("No Connection")
-			connect();
+			#connect();
 	else:
 		print("Already Connected")
 	sql="INSERT INTO City(Name,CountryCode,District,Population)VALUES(%s,%s,%s,%s)"
@@ -41,12 +40,13 @@ def get_newcity(cityname,countrycode,District,Population):
 def get_countryname(Name):
 	if (not conn):
 			print("No Connection")
-			connect();
+			#connect();
 	else:
 		print("Already Connected")
 	condition = "'%"+Name+"%'"
 	
-	sql="select* FROM city where Name like " + condition
+	sql="select code, Name, Continent,population,HeadofState from country where Name like " + condition
+	
 	print(sql)
 		
 	with conn:
@@ -60,13 +60,14 @@ def get_countryname(Name):
 			
 def get_popultion(condition,population):
 	if(not conn):
-		connect();
+		print("not connect")#connect();
 	else:
 		print("Already Connected")
 	sql="select* FROM city where Population" + condition + population
 	print(sql)
 	with conn:
 		try:
+			#print("test")
 			cursor=conn.cursor()
 			cursor.execute(sql)
 			x=cursor.fetchall()
